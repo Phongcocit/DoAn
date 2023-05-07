@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cam Bien</title>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/jquery.knob/1.2.13/jquery.knob.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <style>
+    .grid-container {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr); /* 3 cột có độ rộng bằng nhau */
+  grid-auto-rows: 1fr; /* chiều cao tự động cho từng hàng */
+  grid-gap: 10px; /* khoảng cách giữa các ô */
+  margin-top: 10px;
+  margin: 10px;
+}
+.btn{
+  height: 100px;
+  background-color: rgb(235, 214, 24);
+
+}
+.cambien{
+    
+}
+  </style>
+</head>
+
+<body>
+  {{> menu}}
+  <h1 >Xem thông tin hồ nuôi</h1>
+  <div class="grid-container">
+  <button class="btn"><a class="nav-link cambien" href="/charts"><h3>Độ PH của hồ nuôi</h3></a></button>
+  <button class="btn"><a class="nav-link cambien" href="/tds"><h3>Chất rắn hòa tan của hồ nuôi</h3></a></button>
+  <button class="btn"><a class="nav-link cambien" href="/temperature"><h3>Nhiệt độ nước của hồ nuôi</h3></a></button>
+  <button class="btn"><a class="nav-link cambien" href="/turbidity"><h3>Độ đục của nước</h3></a></button>
+  <button class="btn"><a class="nav-link cambien" href="/settime"><h3>Cài đặt thời gian và lượng thức ăn cho tôm</h3></a></button>
+</div>
+</body>
+
+</html>

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta hour="viewport" content="width=device-width, initial-scale=1">
+  <title>Cam Bien</title>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/jquery.knob/1.2.13/jquery.knob.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <style>
+    .grid-container {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr); 
+  grid-auto-rows: 1fr; /* chiều cao tự động cho từng hàng */
+  grid-gap: 10px; /* khoảng cách giữa các ô */
+  margin-top: 10px;
+  margin: 10px;
+}
+.btn{
+  height: 100px;
+  background-color: rgb(235, 214, 24);
+
+}
+.cambien{
+    
+}
+  </style>
+</head>
+
+<body>
+  {{> menu}}
+  <div class="container">
+    <h2 class="brand">Nhập vào lượng thức ăn và thời gian cách nhau cần cho ăn </h2>
+    <div class="wrapper">
+      <div class="company-info">
+       
+       
+      </div>
+      <div class="contact">
+        <div class="alert">Nhập vào ở trong các ô vuông bên dưới</div>
+        <form id="contactForm">
+          <p>
+            <label>Chu kỳ thời gian cho tôm ăn</label>
+            <input type="number" id="hour"  min="0" max="23" step="1"> Giờ
+            <input type="number" id="minute" name="minute" min="0" max="59" step="1"> Phút
+          </p>
+          <p>
+            <label>Khối lượng thức ăn</label>
+            <input type="number" id="mass" min="1" step="1">
+          </p>
+          <p class="full">
+            <button type="submit">Xác nhận </button>
+          </p>
+        </form>
+      </div>
+    </div>
+  </div>
+  <script src="https://www.gstatic.com/firebasejs/4.3.0/firebase.js"></script>
+  <script>
+    // Initialize Firebase (ADD YOUR OWN DATA)
+const firebaseConfig = {
+    apiKey: "AIzaSyDju9VcaNmE8OHWGIBDiKiPH4LHS1-ANDg",
+    authDomain: "test-5a353.firebaseapp.com",
+    databaseURL: "https://test-5a353-default-rtdb.firebaseio.com",
+    projectId: "test-5a353",
+    storageBucket: "test-5a353.appspot.com",
+    messagingSenderId: "119664388910",
+    appId: "1:119664388910:web:45f7002b32c436a14768bf",
+    measurementId: "G-TY5VTYP1QD"
+    };
+  firebase.initializeApp(firebaseConfig);
+  var messagesRef = firebase.database().ref('messages');
+  document.getElementById('contactForm').addEventListener('submit', submitForm);
+  function submitForm(e){
+    e.preventDefault();
+    var hour = getInputVal('hour');
+    var minute = getInputVal('minute')
+     var mass = getInputVal('mass');
+    saveMessage(mass);
+    saveMessage1(hour);
+    saveMessage2(minute)
+    console.log(hour);
+    console.log(minute);
+    document.querySelector('.alert').style.display = 'block';
+    setTimeout(function(){
+      document.querySelector('.alert').style.display = 'none';
+    },3000);  
+    document.getElementById('contactForm').reset();
+  }
+  
+  function getInputVal(id){
+    return document.getElementById(id).value;
+  }
+  
+  function saveMessage(mass){
+  
+  var newMessageRef = messagesRef.child('list').orderByKey().limitToLast(1);
+    newMessageRef.once('value', function(snapshot) {
+      var previousMessage = snapshot.val();
+      messagesRef.child('list').update({
+              mass: mass
+      });
+    });
+  }
+  function saveMessage1(hour){
+    var newMessageRef = messagesRef.child('list').orderByKey().limitToLast(1);
+      newMessageRef.once('value', function(snapshot) {
+        var previousMessage = snapshot.val();
+        messagesRef.child('list').update({
+                hour: hour
+        });
+      });
+    }
+     function saveMessage2(minute){
+    var newMessageRef = messagesRef.child('list').orderByKey().limitToLast(1);
+      newMessageRef.once('value', function(snapshot) {
+        var previousMessage = snapshot.val();
+        messagesRef.child('list').update({
+                minute: minute
+        });
+      });
+    }
+  </script>
+</body>
+</html>
